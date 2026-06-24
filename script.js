@@ -1,8 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
   const marker = document.querySelector('#marker');
   const uiContainer = document.querySelector('#ui-container');
-
   const bgm = document.querySelector('#bgm');
+  const video = document.querySelector('#portfolio');
+
+  // Force video looping for mobile browsers
+  if (video) {
+    video.addEventListener('ended', () => {
+      video.currentTime = 0;
+      video.play();
+    });
+  }
+
+  // Prevent default context menu on long-press globally
+  window.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+  });
 
   // Handle marker tracking state
   marker.addEventListener('markerFound', () => {
@@ -46,21 +59,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!btn || !popup) return;
 
     const show = (e) => {
-      e.preventDefault(); // Prevent touch hold from selecting text/image
+      if (e) e.preventDefault();
       popup.setAttribute('animation', 'property: scale; to: 1 1 1; dur: 300; easing: easeOutBack');
-    };
-    
-    const hide = (e) => {
-      e.preventDefault();
-      popup.setAttribute('animation', 'property: scale; to: 0 0 0; dur: 200; easing: easeInBack');
+      
+      // Once pressed, wait for ANY touch release or mouse up on the entire screen to hide it.
+      // This prevents issues where the raycaster slips off the tiny icon due to shaky hands.
+      const stopHold = () => {
+        popup.setAttribute('animation', 'property: scale; to: 0 0 0; dur: 200; easing: easeInBack');
+        window.removeEventListener('mouseup', stopHold);
+        window.removeEventListener('touchend', stopHold);
+      };
+      
+      window.addEventListener('mouseup', stopHold);
+      window.addEventListener('touchend', stopHold);
     };
 
     btn.addEventListener('mousedown', show);
-    btn.addEventListener('touchstart', show, {passive: false});
-    
-    btn.addEventListener('mouseup', hide);
-    btn.addEventListener('touchend', hide, {passive: false});
-    btn.addEventListener('mouseleave', hide);
   };
 
   setupHoldPopup('#github-btn', '#popup-github');
