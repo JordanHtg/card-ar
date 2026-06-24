@@ -25,7 +25,7 @@
     <!-- AR Scene -->
     <a-scene 
       embedded 
-      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono; maxDetectionRate: 60;"
       renderer="logarithmicDepthBuffer: true; antialias: true; alpha: true;"
       vr-mode-ui="enabled: false">
       
@@ -55,8 +55,8 @@
         <img id="img-gmail" src="Gmail.png" crossorigin="anonymous">
       </a-assets>
 
-      <!-- The AR Marker with Smoothing Enabled -->
-      <a-marker type="pattern" url="pattern.patt" id="marker" emitevents="true" smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5">
+      <!-- Highly Stabilized Marker Tracking -->
+      <a-marker type="pattern" url="pattern.patt" id="marker" emitevents="true" smooth="true" smoothCount="20" smoothTolerance="0.05" smoothThreshold="10">
         
         <!-- AR Container: Groups everything for popup animation -->
         <a-entity id="ar-container" scale="0 0 0" animation="property: scale; to: 1 1 1; dur: 1000; easing: easeOutElastic; startEvents: marker-found-anim">

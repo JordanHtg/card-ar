@@ -45,14 +45,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const popup = document.querySelector(popupId);
     if (!btn || !popup) return;
 
-    const show = () => popup.emit('pop-in');
-    const hide = () => popup.emit('pop-out');
+    const show = (e) => {
+      e.preventDefault(); // Prevent touch hold from selecting text/image
+      popup.setAttribute('animation', 'property: scale; to: 1 1 1; dur: 300; easing: easeOutBack');
+    };
+    
+    const hide = (e) => {
+      e.preventDefault();
+      popup.setAttribute('animation', 'property: scale; to: 0 0 0; dur: 200; easing: easeInBack');
+    };
 
     btn.addEventListener('mousedown', show);
-    btn.addEventListener('touchstart', show);
+    btn.addEventListener('touchstart', show, {passive: false});
     
     btn.addEventListener('mouseup', hide);
-    btn.addEventListener('touchend', hide);
+    btn.addEventListener('touchend', hide, {passive: false});
     btn.addEventListener('mouseleave', hide);
   };
 
