@@ -76,20 +76,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hide all
     popups.forEach(p => {
       const el = document.querySelector(p.id);
-      if (el) el.setAttribute('animation', 'property: scale; to: 0 0 0; dur: 200; easing: easeInBack');
+      if (el) el.emit('pop-out');
     });
 
     // Show current
     const current = popups[index];
     const currentEl = document.querySelector(current.id);
     if (currentEl) {
-      currentEl.setAttribute('animation', 'property: scale; to: 1 1 1; dur: 300; easing: easeOutBack');
+      currentEl.emit('pop-in');
     }
 
     // Move cursor
     if (cursor) {
       cursor.setAttribute('position', `${current.x} 0 0`);
-      cursor.setAttribute('visible', 'true');
+      cursor.setAttribute('visible', true);
     }
   };
 
@@ -106,9 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cycleInterval) clearInterval(cycleInterval);
     popups.forEach(p => {
       const el = document.querySelector(p.id);
-      if (el) el.setAttribute('animation', 'property: scale; to: 0 0 0; dur: 200; easing: easeInBack');
+      if (el) el.emit('pop-out');
     });
-    if (cursor) cursor.setAttribute('visible', 'false');
+    if (cursor) cursor.setAttribute('visible', false);
   };
 
   // Attach to marker events
