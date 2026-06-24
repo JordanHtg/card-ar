@@ -90,6 +90,14 @@
             <!-- Gmail -->
             <a-image src="#icon-gmail" position="0.9 0 0" rotation="-90 0 0" width="0.45" height="0.45" class="clickable" id="gmail-btn"></a-image>
 
+            <!-- Active Cursor (Pulsing Ring) -->
+            <a-entity id="active-cursor" position="-0.9 0 0" visible="false">
+              <a-ring color="#00FFFF" radius-inner="0.25" radius-outer="0.28" rotation="-90 0 0" 
+                      animation="property: scale; dir: alternate; loop: true; dur: 600; from: 1 1 1; to: 1.3 1.3 1.3"
+                      animation__alpha="property: material.opacity; dir: alternate; loop: true; dur: 600; from: 1; to: 0.1">
+              </a-ring>
+            </a-entity>
+
             <!-- POPUPS (Hidden by default scale 0) -->
             <!-- Github Popup (Laptop) -->
             <a-entity id="popup-github" position="-0.9 1.5 -1.0" rotation="-45 0 0" scale="0 0 0" animation="property: scale; to: 1 1 1; dur: 300; easing: easeOutBack; startEvents: pop-in" animation__out="property: scale; to: 0 0 0; dur: 200; easing: easeInBack; startEvents: pop-out">
